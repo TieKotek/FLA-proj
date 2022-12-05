@@ -73,6 +73,7 @@ void Tape::set(char ch) {
 
 string Tape::output() {
     string result = "";
+    if (data.size() == 1 && (*head).ch == '_') return "";
     for (auto ite = data.begin(); ite != data.end(); ite++) {
         result.push_back((*ite).ch);
     }

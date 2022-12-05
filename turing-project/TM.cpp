@@ -50,7 +50,7 @@ void SplitString(const std::string& s, std::vector<std::string>& v, const std::s
 bool match(string s, string pattern) {
     if (s.length() != pattern.length()) return false;
     for (int i = 0; i < s.length(); i++) {
-        if (pattern[i] != '*' && pattern[i] != s[i]) return false; 
+        if (pattern[i] != s[i] && (pattern[i] != '*' || pattern[i] == '*' && s[i] == '_')) return false; 
     }
     return true;
 }
