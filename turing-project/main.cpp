@@ -1,12 +1,89 @@
 #include <iostream>
+#include <string>
+#include <cstring>
+#include <fstream>
+#include "TM.h"
 
 using namespace std;
 
-int main(int argc, char* argv[]){
-    if(argc == 1){
-        cerr << "something went wrong!" << endl;
+bool can_open(string path) {
+    ifstream f;
+    f.open(path);
+    if (f.is_open()) {
+        f.close();
         return 1;
     }
-    cout<<"This is for testing" << endl;
+    return 0;
+}
+
+int main(int argc, char* argv[]) {
+    TM t;
+    bool verbose = 0;
+    if(argc == 1) {
+        cerr << "Illegal usage" << endl;
+        return 1;
+    }
+    else if (argc == 2) {
+        if (strcmp(argv[1], "--help") == 0) {
+            cout << "usage: turing [-v|--verbose] [-h|--help] <tm> <input>" << endl;
+        }
+        else {
+            cerr << "Illegal usage" << endl;
+            return 1;
+        }
+    }
+    else if (argc == 3 || argc == 4) {
+        string str1, str2, str3;
+        if (argc == 4) {
+            str1 = argv[2];
+            str2 = argv[3];
+            str3 = argv[1];
+            if (str3 == "--verbose" || str3 == "-v") {
+                verbose = 1;
+                t.set_verbose(1);
+            }
+            else {
+                cerr << "Illegal usage" << endl;
+                return 1;
+            }
+        }
+        else {
+            str1 = argv[1];
+            str2 = argv[2];
+        }
+        if (str1[0] == '-') {
+            cerr << "Illegal usage" << endl;
+            return 1;
+        }
+        else {
+            if (can_open(str1)) {
+                if (t.load(str1)) {
+                    if (str2[0] == '-') {
+                        cerr << "Illegal usage" << endl;
+                        return 1;
+                    }
+                    else {
+                        bool succ_input = t.set_input(str2);
+                        if (!succ_input) {
+                            if (!verbose) cerr << "Illegal input" << endl;
+                            return 1;
+                        }
+                    }
+                }
+                else {
+                    cerr << "Syntax error" << endl;
+                    return 1;
+                }
+            }
+            else {
+                cerr << "Illegal usage" << endl;
+                return 1;
+            }
+        }
+    } else {
+        cerr << "Illegal usage" << endl;
+        return 1;
+    }
+    t.run();
     return 0;
 }
