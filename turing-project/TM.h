@@ -1,11 +1,11 @@
 # ifndef TM_H
 # define TM_H
 
-#include <set>
+#include <unordered_set>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include "Tape.h"
 
 using namespace std;
@@ -27,10 +27,10 @@ private:
     //backup datas
     int _step_counter{0};
     bool _halted{0};
-    set<string> _state_set{}, _accept_states;
-    set<char> _input_set{}, _tape_set{};
+    unordered_set<string> _state_set{}, _accept_states;
+    unordered_set<char> _input_set{}, _tape_set{};
     int _tape_num{0};
-    map<string, map<string, TransitionOutput> > _trans_fun{};
+    unordered_map<string, unordered_map<string, TransitionOutput> > _trans_fun{};
 
     // turing structures
     string _state{""};

@@ -72,12 +72,16 @@ void Tape::set(char ch) {
 }
 
 string Tape::output() {
+    trim();
     string result = "";
     if (data.size() == 1 && (*head).ch == '_') return "";
     for (auto ite = data.begin(); ite != data.end(); ite++) {
         result.push_back((*ite).ch);
     }
-    return result;
+    while(result[result.length() - 1] == '_') result.pop_back();
+    int now = 0;
+    while(result[now] == '_') now++;
+    return result.substr(now);
 }
 
 void Tape::print() {

@@ -86,8 +86,8 @@ bool TM::load(string file_path) {
                     }
                 }
                 for (auto ite = _state_set.begin(); ite != _state_set.end(); ite++) {
-                    map<string, TransitionOutput> temp{};
-                    _trans_fun.insert(pair<string, map<string, TransitionOutput> >(*ite, temp));
+                    unordered_map<string, TransitionOutput> temp{};
+                    _trans_fun.insert(pair<string, unordered_map<string, TransitionOutput> >(*ite, temp));
                 }
             }
             if (line.substr(0, 6) == "#S = {") {
@@ -333,7 +333,7 @@ void TM::run() {
             }
             cout << "---------------------------------------------" << endl;
         }
-        if (accepted()) break;
+        // if (accepted()) break; 接收和
         step();
     }
     string result = _tapes[0].output();
