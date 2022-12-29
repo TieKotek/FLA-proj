@@ -26,11 +26,13 @@ cAndgoRightA x x r cAndgoRightA
 cAndgoRightA a x r verify_end
 cAndgoRightA b b r halt_reject
 cAndgoRightA c c r halt_reject
+cAndgoRightA _ _ r halt_reject
 
 cAndgoRightB x x r cAndgoRightB
 cAndgoRightB a a r halt_reject
 cAndgoRightB b x r verify_end
 cAndgoRightB c c r halt_reject
+cAndgoRightB _ _ r halt_reject
 
 verify_end _ _ l goLeftEnd
 verify_end * * l goLeft
